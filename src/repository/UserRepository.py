@@ -1,4 +1,4 @@
-from src.domain.User import User
+from src.model.User import User
 from src.dto.UserDTO import UserDTO
 
 class UserRepository:
