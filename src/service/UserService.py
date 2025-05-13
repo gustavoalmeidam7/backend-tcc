@@ -1,6 +1,6 @@
 from src.repository.UserRepository import UserRepository
 
-from src.domain.User import User
+from src.model.User import User
 from src.dto.UserDTO import UserDTO
 
 from src.dto.CreateUser import CreateUserResult, UserStatus
