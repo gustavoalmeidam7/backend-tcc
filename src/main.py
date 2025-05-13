@@ -1,18 +1,15 @@
-from src.service.UserService import UserService
-
-from src.dto.CreateUser import *
-
-from src.domain import User, Driver, Travel
+from src.model import User, Driver, Travel
 
 from src.db.postgres import db
 
-db.connect()
+from src.controller import Controller
 
-db.create_tables([User.User, Driver.Driver, Travel.Travel])
+def main():
+    db.connect()
 
+    db.create_tables([User.User, Driver.Driver, Travel.Travel])
 
-userService = UserService()
+    Controller.init()
 
-userService.delete_by_id(5)
-
-print(userService.create(usuario="Gustavin", email="aaaa@mail.com").message)
+if __name__ == "__main__":
+    main()
