@@ -1,8 +1,8 @@
 from src.model import User, Driver, Travel
 
-from src.db.postgres import db
-
 from src.controller import Controller
+
+from src.db.DB import db
 
 def main():
     db.connect()

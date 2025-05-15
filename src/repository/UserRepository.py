@@ -1,9 +1,11 @@
+from collections import UserList
 from src.model.User import User
 from src.dto.UserDTO import UserDTO
+from playhouse.shortcuts import model_to_dict
 
 class UserRepository:
     def create(self, userDto: UserDTO) -> None:
-        User.create(
+        return User.create(
             username = userDto.username,
             email = userDto.email
         )
@@ -11,8 +13,8 @@ class UserRepository:
     def find_by_id(self, id: int) -> UserDTO:
         return User.get(User.id == id).toDto()
 
-    def find_all(self) -> User:
-        return User.select()
+    def find_all(self) -> UserList:
+        return list(User.select())
 
     def update(self, userDto: UserDTO) -> None:
         query = User.update(id=userDto.id, username=userDto.username, email=userDto.email).where(User.id == userDto.id)
