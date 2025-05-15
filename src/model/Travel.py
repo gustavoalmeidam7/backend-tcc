@@ -1,7 +1,7 @@
 from peewee import AutoField, ForeignKeyField, Model
 from src.model.User import User
 from src.model.Driver import Driver
-from src.db.postgres import db
+from src.db.DB import db
 
 class Travel(Model):
     travel_id = AutoField()
