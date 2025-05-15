@@ -5,6 +5,8 @@ from src.dto.UserDTO import UserDTO
 
 from src.dto.CreateUser import CreateUserResult, UserStatus
 
+from src.service.Utils import bulk_convert_to_dict
+
 class UserService:
     userRepository = UserRepository()
 
@@ -30,8 +32,5 @@ class UserService:
     def delete_all(self) -> None:
         self.userRepository.delete_all()
 
-    def find_all(self) -> UserDTO:
-        return list(map(
-                model_to_dict,
-                self.userRepository.find_all()
-                ))
+    def find_all(self) -> dict:
+        return bulk_convert_to_dict(self.userRepository.find_all())
