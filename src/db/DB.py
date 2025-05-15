@@ -6,12 +6,24 @@ from dotenv import load_dotenv
 
 import os
 
+class connection:
+    database = "application"
+    password = "123456"
+    ip = "localhost"
+    port = "5432"
+    user = "application"
+
 databases = {
-    "PROD": postgres.db,
-    "DEV" : sqlite.db
+    "PROD": postgres.Database(connection),
+    "DEV" : sqlite.Database(connection)
 }
 
 dotenv_path = dirname(__file__) + "/../../.env"
 load_dotenv(dotenv_path)
 
-db = databases[os.environ.get("enviroment")]
+try:
+    os.environ.get("enviroment")
+except(KeyError):
+    raise RuntimeError("No \"enviroment\" key set on .env file, please set one (\"PROD\" or \"DEV\")")
+
+db = databases[os.environ.get("enviroment")].db

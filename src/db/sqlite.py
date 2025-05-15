@@ -1,3 +1,7 @@
 from peewee import SqliteDatabase
 
-db = SqliteDatabase("database.db")
+class Database:
+    def __init__(self, connection):
+        pass
+
+        self.db = SqliteDatabase("database.db")

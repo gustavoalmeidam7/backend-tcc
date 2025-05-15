@@ -1,6 +1,5 @@
 from peewee import Model, AutoField, CharField
 from src.db.DB import db
-from json import dumps
 
 from src.dto.UserDTO import UserDTO
 
@@ -23,9 +22,6 @@ class User(Model):
             username= userDTO.username,
             email= userDTO.id
         )
-
-    def toJson(self):
-        print(model_to_dict(self))
 
     def __repr__(self) -> str:
         return f"<User (id={self.id}, username={self.username}, email={self.username})>"

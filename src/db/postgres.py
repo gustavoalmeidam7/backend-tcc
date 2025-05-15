@@ -1,10 +1,11 @@
 from peewee import PostgresqlDatabase
 
-__database__ = "application"
-__password__ = "123456"
-__ip__ = "localhost"
-__port__ = "5432"
-__user__ = "application"
-
-db = PostgresqlDatabase(f"postgresql://{__user__}:{__password__}@{__ip__}:{__port__}/{__database__}")
-
+class Database:
+    def __init__(self, connection):
+        __database__ =  connection.database
+        __password__ =  connection.password
+        __ip__       =  connection.ip
+        __port__     =  connection.port
+        __user__     =  connection.user
+    
+        self.db = PostgresqlDatabase(f"postgresql://{__user__}:{__password__}@{__ip__}:{__port__}/{__database__}")
