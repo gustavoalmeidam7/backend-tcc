@@ -1,15 +1,20 @@
-from peewee import Model, AutoField, CharField, ForeignKeyField
+from peewee import Model, AutoField, CharField
 from src.db.DB import db
 
 class Driver(Model):
-    id = AutoField(primary_key=True)
-    driver_name = CharField()
-    email = CharField(unique=True)
-    # ambulance = ForeignKeyField()
+    id             = AutoField(primary_key=True)
+    name           = CharField(max_length=50, null=False)
+    cpf            = CharField(max_length=14, unique=True, null=False)
+    email          = CharField(max_length=35, unique=True, null=False)
+    phone          = CharField(max_length=15, null=False)
+    cnh_number     = CharField(max_length=12, null=False)
 
     def __repr__(self) -> str:
-        return f"<Travel (id={self.id}, driver_name={self.driver_name}, email={self.email})>"
+        return (
+            f"<Driver(id={self.id}, name={self.name}, cpf={self.cpf}, email={self.email}, "
+            f"phone={self.phone}, cnh_number={self.cnh_number})>"
+        )
 
-    class Meta():
+    class Meta:
         database = db
-        db_table = "driver"
+        table_name = "driver"

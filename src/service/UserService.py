@@ -1,7 +1,7 @@
 from playhouse.shortcuts import model_to_dict
-from src.repository.UserRepository import UserRepository
-
 from src.dto.UserDTO import UserDTO
+from src.model import User
+from src.repository.UserRepository import UserRepository
 
 from src.dto.CreateUser import CreateUserResult, UserStatus
 
@@ -10,14 +10,21 @@ from src.service.Utils import bulk_convert_to_dict
 class UserService:
     userRepository = UserRepository()
 
-    def create(self, usuario: str, email: str) -> CreateUserResult:
-        if self.userRepository.exists_by_email(email):
+    #TODO validar se estou recebendo null ou strings vazias
+    #TODO validar se o cpf é válido e mascara
+    #TODO mascara do email 
+    #TODO mascara do telefone
+    def create(self, userDTO: UserDTO) -> CreateUserResult:
+        userExists = self.userRepository.exists_by_email(userDTO.email) or self.userRepository.exists_by_cpf(userDTO.cpf) or self.userRepository.exists_by_phone_number(userDTO.phone_number)
+
+        if userExists:
             return CreateUserResult(
                 status= UserStatus.EXISTS,
                 message= "Usuário já existe!"
             ), None
 
-        createdUser = self.userRepository.create(UserDTO(username=usuario, email=email))
+        createdUser = self.userRepository.create(userDTO.toModel())
+
         dictResponse = model_to_dict(createdUser)
         result = CreateUserResult(
             status= UserStatus.CREATED,

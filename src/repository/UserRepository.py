@@ -1,23 +1,19 @@
 from collections import UserList
 from src.model.User import User
-from src.dto.UserDTO import UserDTO
-from playhouse.shortcuts import model_to_dict
 
 class UserRepository:
-    def create(self, userDto: UserDTO) -> None:
-        return User.create(
-            username = userDto.username,
-            email = userDto.email
-        )
+    def create(self, userModel: User) -> None:
+        userModel.save(force_insert=True)
+        return userModel
 
-    def find_by_id(self, id: int) -> UserDTO:
-        return User.get(User.id == id).toDto()
+    def find_by_id(self, id: int) -> User:
+        return User.get(User.id == id)
 
     def find_all(self) -> UserList:
         return list(User.select())
 
-    def update(self, userDto: UserDTO) -> None:
-        query = User.update(id=userDto.id, username=userDto.username, email=userDto.email).where(User.id == userDto.id)
+    def update(self, userModel: User) -> None:
+        query = User.update(id=userModel.id, username=userModel.username, email=userModel.email).where(User.id == userModel.id)
         query.execute()
 
     def delete_by_id(self, id: int) -> None:
@@ -32,8 +28,17 @@ class UserRepository:
     def count(self) -> int:
         return User.select().count()
 
-    def find_by_email(self, email: str) -> UserDTO:
+    def find_by_email(self, email: str) -> User:
         return User.get(User.email == email).toDto()
+
+    def find_by_cpf(self, cpf: str) -> User:
+        return User.get(User.cpf == cpf).toDto()
     
     def exists_by_email(self, email: str) -> bool:
         return User.select().where(User.email == email).exists()
+
+    def exists_by_phone_number(self, phone_number: str) -> bool:
+        return User.select().where(User.phone_number == phone_number).exists()
+
+    def exists_by_cpf(self, cpf: str) -> bool:
+        return User.select().where(User.cpf == cpf).exists()
