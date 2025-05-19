@@ -20,14 +20,15 @@ class UserDTO:
         if not userJson:
             raise ValueError("User JSON cannot be None")
 
-        #TODO melhor checagem na service, ainda fazendo passar daqui para ser validade email e etc
-        if not userJson["birthday"]:
-            raise ValueError("User birthday cannot be None")
+        user_birthday = None
+
+        if userJson["birthday"]:
+            user_birthday = datetime.datetime.strptime(userJson["birthday"], '%d-%m-%Y').date()
 
         return UserDTO(
             username     = userJson["username"],
             cpf          = userJson["cpf"],
-            birthday     = datetime.datetime.strptime(userJson["birthday"], '%d-%m-%Y').date(),
+            birthday     = user_birthday,
             email        = userJson["email"],
             phone_number = userJson["phone_number"],
             password     = userJson["password"]

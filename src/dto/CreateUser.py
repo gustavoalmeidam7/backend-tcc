@@ -4,6 +4,7 @@ from enum import auto, Enum
 class UserStatus(Enum):
     CREATED = auto()
     EXISTS = auto()
+    INVALID = auto()
 
 @dataclass
 class CreateUserResult:

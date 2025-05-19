@@ -21,7 +21,11 @@ def create_user():
     if result.status == UserStatus.CREATED:
         return jsonify(user)
     
-    return Response(json.dumps({"erro": result.message}) , 409)
+    if result.status == UserStatus.EXISTS:
+        return Response(json.dumps({"erro": result.message}), 409)
+
+    if result.status == UserStatus.INVALID:
+        return Response(json.dumps({"erro": result.message}) , 400)
 
 @userBlueprint.route("/getall", methods=["GET"])
 def get_all_users():
