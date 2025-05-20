@@ -21,19 +21,11 @@ class UserService:
             errors = userDTOValidator.get_errors()
             dict_errors = []
             for error in errors:
-                dict_errors.append({"erro": error})
+                dict_errors.append({error.name: error.message})
 
             return CreateUserResult(
                 status= UserStatus.INVALID,
                 message= dict_errors
-            ), None
-
-        userExists = self.userRepository.exists_by_email(userDTO.email) or self.userRepository.exists_by_cpf(userDTO.cpf) or self.userRepository.exists_by_phone_number(userDTO.phone_number)
-
-        if userExists:
-            return CreateUserResult(
-                status= UserStatus.EXISTS,
-                message= "Usuário já existe!"
             ), None
 
         createdUser = self.userRepository.create(userDTO.toModel())
