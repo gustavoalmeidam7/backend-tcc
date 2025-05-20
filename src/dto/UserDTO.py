@@ -17,21 +17,19 @@ class UserDTO:
     @staticmethod
     def fromDict(userJson: dict
     ) -> 'UserDTO':
-        if not userJson:
-            raise ValueError("User JSON cannot be None")
 
         user_birthday = None
 
-        if userJson["birthday"]:
-            user_birthday = datetime.datetime.strptime(userJson["birthday"], '%d-%m-%Y').date()
+        if userJson.get("birthday"):
+            user_birthday = datetime.datetime.strptime(userJson.get("birthday"), '%d-%m-%Y').date()
 
         return UserDTO(
-            username     = userJson["username"],
-            cpf          = userJson["cpf"],
+            username     = userJson.get("username"),
+            cpf          = userJson.get("cpf"),
             birthday     = user_birthday,
-            email        = userJson["email"],
-            phone_number = userJson["phone_number"],
-            password     = userJson["password"]
+            email        = userJson.get("email"),
+            phone_number = userJson.get("phone_number"),
+            password     = userJson.get("password")
         )
 
     @staticmethod
@@ -54,5 +52,3 @@ class UserDTO:
             phone_number=self.phone_number,
             password=self.password
         )
-
-    
