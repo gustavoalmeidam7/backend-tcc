@@ -4,8 +4,8 @@ from src.model.User import User
 
 class UserDTO:
     def __init__(
-        self, username: str, cpf: str,
-        birthday: datetime, email: str, phone_number: str, password: str
+        self, username: str = None, cpf: str = None,
+        birthday: datetime = None, email: str = None, phone_number: str = None, password: str = None
     ) -> None:
         self.username = username
         self.cpf = cpf
