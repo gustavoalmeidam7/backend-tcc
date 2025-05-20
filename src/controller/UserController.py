@@ -1,6 +1,6 @@
 from flask import Blueprint, Response, jsonify, request
-from src.dto.UserDTO import UserDTO
-from src.dto.CreateUser import UserStatus
+from src.dto.User.UserCreateDTO import UserDTO
+from src.dto.User.CreateUser import UserStatus
 
 from src.service.UserService import UserService
 
@@ -26,6 +26,4 @@ def create_user():
 
 @userBlueprint.route("/getall", methods=["GET"])
 def get_all_users():
-    dictUsers = userService.find_all()
-
-    return jsonify(dictUsers)
+    return jsonify(userService.find_all_dict())

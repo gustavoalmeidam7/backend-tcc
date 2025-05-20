@@ -1,15 +1,14 @@
-from collections import UserList
 from src.model.User import User
 
 class UserRepository:
-    def create(self, userModel: User) -> None:
+    def create(self, userModel: User) -> User:
         userModel.save(force_insert=True)
         return userModel
 
     def find_by_id(self, id: int) -> User:
         return User.get(User.id == id)
 
-    def find_all(self) -> UserList:
+    def find_all(self) -> 'list[User]':
         return list(User.select())
 
     def update(self, userModel: User) -> None:

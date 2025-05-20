@@ -1,9 +1,10 @@
 from playhouse.shortcuts import model_to_dict
-from src.dto.UserDTO import UserDTO
+from src.dto.User.UserResponseDTO import UserResponseDTO
+from src.dto.User.UserCreateDTO import UserDTO
 from src.validator.UserDTOValidator import Error, UserDTOValidator
 from src.repository.UserRepository import UserRepository
 
-from src.dto.CreateUser import CreateUserResult, UserStatus
+from src.dto.User.CreateUser import CreateUserResult, UserStatus
 
 from src.service.Utils import bulk_convert_to_dict
 
@@ -44,5 +45,8 @@ class UserService:
     def delete_all(self) -> None:
         self.userRepository.delete_all()
 
-    def find_all(self) -> dict:
-        return bulk_convert_to_dict(self.userRepository.find_all())
+    def find_all_dict(self) -> dict:
+        return list(map(UserResponseDTO.model_to_dict, self.userRepository.find_all()))
+    
+    def find_all(self) -> list[UserResponseDTO]:
+        return list(map(UserResponseDTO.from_model, self.userRepository.find_all()))
