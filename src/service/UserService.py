@@ -9,13 +9,13 @@ from src.dto.User.CreateUser import CreateUserResult, UserStatus
 class UserService:
     instance = None
 
-    def __init__(self) -> None:
-        if not instance:
-            instance = UserService()
+    userRepository = UserRepository.get_instance()
 
-        return instance
-
-    userRepository = UserRepository()
+    @staticmethod
+    def get_instance() -> 'UserRepository':
+        if not UserService.instance:
+            UserService.instance = UserRepository()
+        return UserService.instance
 
     #TODO validar se o cpf é válido e mascara
     #TODO mascara do email 

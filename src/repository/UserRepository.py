@@ -2,13 +2,12 @@ from src.model.User import User
 
 class UserRepository:
     instance = None
-    
-    def __init__(self):
-        if not instance:
-            instance = UserRepository()
-        
-        return instance
 
+    @staticmethod
+    def get_instance() -> 'UserRepository':
+        if not UserRepository.instance:
+            UserRepository.instance = UserRepository()
+        return UserRepository.instance
 
     def create(self, userModel: User) -> User:
         userModel.save(force_insert=True)
