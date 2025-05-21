@@ -6,3 +6,11 @@ def bulk_convert_to_dict(modelList) -> dict:
             model_to_dict,
             modelList
         ))
+
+def unmask_number(number: str) -> str:
+    finalNumber = ""
+    for char in number:
+        if char.isnumeric():
+            finalNumber += char
+
+    return str(finalNumber)

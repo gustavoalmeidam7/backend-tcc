@@ -2,6 +2,8 @@ import datetime
 
 from src.model.User import User
 
+from src.service.Utils import unmask_number
+
 class UserDTO:
     def __init__(
         self, username: str = None, cpf: str = None,
@@ -25,10 +27,10 @@ class UserDTO:
 
         return UserDTO(
             username     = userJson.get("username"),
-            cpf          = userJson.get("cpf"),
+            cpf          = unmask_number(userJson.get("cpf")),
             birthday     = user_birthday,
             email        = userJson.get("email"),
-            phone_number = userJson.get("phone_number"),
+            phone_number = unmask_number(userJson.get("phone_number")),
             password     = userJson.get("password")
         )
 
