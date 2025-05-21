@@ -29,7 +29,7 @@ class UserService:
                 message= dict_errors
             ), None
 
-        createdUser = self.userRepository.create(userDTO.toModel())
+        createdUser = self.userRepository.create(userDTO.to_model())
 
         dictResponse = model_to_dict(createdUser)
         result = CreateUserResult(

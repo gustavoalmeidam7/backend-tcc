@@ -14,7 +14,7 @@ userService = UserService()
 def create_user():
     body = request.get_json()
 
-    user = UserDTO.fromDict(body)
+    user = UserDTO.from_dict(body)
 
     result, user = userService.create(user)
 

@@ -15,7 +15,7 @@ class UserDTO:
         self.password = password
 
     @staticmethod
-    def fromDict(userJson: dict
+    def from_dict(userJson: dict
     ) -> 'UserDTO':
 
         user_birthday = None
@@ -33,7 +33,7 @@ class UserDTO:
         )
 
     @staticmethod
-    def fromModel(userModel: User) -> 'UserDTO':
+    def from_model(userModel: User) -> 'UserDTO':
         return UserDTO(
             username     = userModel.username,
             cpf          = userModel.cpf,
@@ -43,7 +43,7 @@ class UserDTO:
             password     = userModel.password
         )
 
-    def toModel(self) -> User:
+    def to_model(self) -> User:
         return User(
             username=self.username,
             cpf=self.cpf,
