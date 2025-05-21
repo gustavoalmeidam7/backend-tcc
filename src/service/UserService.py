@@ -6,9 +6,15 @@ from src.repository.UserRepository import UserRepository
 
 from src.dto.User.CreateUser import CreateUserResult, UserStatus
 
-from src.service.Utils import bulk_convert_to_dict
-
 class UserService:
+    instance = None
+
+    def __init__(self) -> None:
+        if not instance:
+            instance = UserService()
+
+        return instance
+
     userRepository = UserRepository()
 
     #TODO validar se o cpf é válido e mascara
