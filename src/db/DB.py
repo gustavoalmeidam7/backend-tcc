@@ -22,8 +22,8 @@ dotenv_path = dirname(__file__) + "/../../.env"
 load_dotenv(dotenv_path)
 
 try:
-    os.environ.get("enviroment")
+    os.environ.get("environment")
 except(KeyError):
-    raise RuntimeError("No \"enviroment\" key set on .env file, please set one (\"PROD\" or \"DEV\")")
+    raise RuntimeError("No \"environment\" key set on .env file, please set one (\"PROD\" or \"DEV\")")
 
-db = databases[os.environ.get("enviroment")].db
+db = databases[os.environ.get("environment")].db
