@@ -5,6 +5,7 @@
 - Flask/ Flask-restx
 - Peewee
 - Dotenv
+- Swagger para documentação
 
 ## Pré-requisitos
 - Interpretador [Python](https://www.python.org/downloads/) versão 3.12 ou superior
@@ -29,4 +30,10 @@ A chave PROD também pode ser usada, porém é necessario um banco de dados post
 Finalmente rode:
 ```bash
 python -m src.main
+```
+
+## Acessar documentação:
+Url padrão:
+```
+http://localhost:5000/api/doc
 ```

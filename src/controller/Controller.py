@@ -7,7 +7,7 @@ def init():
 
     controllers = [UserController.api]
 
-    api = Api(app, version="1.0.0", title="Api gerenciamento de ambulância TCC", prefix="/api", doc="/doc")
+    api = Api(app, version="1.0.0", title="Api gerenciamento de ambulância TCC", prefix="/api", doc="/api/doc")
 
     for controller in controllers:
         api.add_namespace(controller, controller.path)
