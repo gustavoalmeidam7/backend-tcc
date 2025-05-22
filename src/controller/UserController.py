@@ -1,29 +1,35 @@
-from flask import Blueprint, Response, jsonify, request
-from src.dto.User.UserCreateDTO import UserDTO
-from src.dto.User.CreateUser import UserStatus
+from flask import Response, jsonify, request
+from flask_restx import Resource, Namespace
 
+from src.dto.User.UserCreateDTO import UserDTO
+
+from src.dto.User import UserCreateDTO, UserResponseDTO
+
+from src.dto.User.CreateUser import UserStatus
 from src.service.UserService import UserService
 
 import json
 
-userBlueprint = Blueprint("Users", __name__, static_url_path="/user")
+api = Namespace("Users", description="Users blueprint", path="/api/user")
 
 userService = UserService()
 
-@userBlueprint.route("/create", methods=["POST"])
-def create_user():
-    body = request.get_json()
+@api.route("/create")
+class CreateUser(Resource):
+    @api.expect(UserCreateDTO.doc_model(api))
+    def post(self):
+        body = request.get_json()
+        user = UserDTO.from_dict(body)
+        result, user = userService.create(user)
 
-    user = UserDTO.from_dict(body)
+        if result.status == UserStatus.CREATED:
+            return jsonify(user)
 
-    result, user = userService.create(user)
+        if result.status == UserStatus.INVALID:
+            return Response(json.dumps({"erros": result.message}), 400)
 
-    if result.status == UserStatus.CREATED:
-        return jsonify(user)
-
-    if result.status == UserStatus.INVALID:
-        return Response(json.dumps({"erros": result.message}) , 400)
-
-@userBlueprint.route("/getall", methods=["GET"])
-def get_all_users():
-    return jsonify(userService.find_all_dict())
+@api.route("/getall")
+class GetAllUsers(Resource):
+    @api.response(200, "Return all registered users", UserResponseDTO.doc_model(api))
+    def get(self):
+        return jsonify(userService.find_all_dict())

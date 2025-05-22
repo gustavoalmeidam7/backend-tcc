@@ -1,12 +1,16 @@
 from flask import Flask
+from flask_restx import Api
 from src.controller import UserController
 
 def init():
     app = Flask(__name__)
 
-    blueprints = [UserController.userBlueprint]
+    controllers = [UserController.api]
 
-    for blueprint in blueprints:
-        app.register_blueprint(blueprint, url_prefix=blueprint.static_url_path)
+    api = Api(app, version="1.0.0", title="Api gerenciamento de ambulância TCC", prefix="/api", doc="/doc")
 
-    app.run()
+    for controller in controllers:
+        api.add_namespace(controller, controller.path)
+
+    app.run(threaded=True)
+

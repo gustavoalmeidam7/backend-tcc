@@ -2,6 +2,8 @@ import datetime
 
 from src.model.User import User
 
+from flask_restx import fields, Namespace
+
 from src.service.Utils import unmask_number
 
 class UserDTO:
@@ -54,3 +56,16 @@ class UserDTO:
             phone_number=self.phone_number,
             password=self.password
         )
+
+def doc_model(api: Namespace) -> dict:
+    return api.model(
+        "CreateUserDTO",
+        {
+            "username":     fields.String(required=True, description="Nome de usuário", example="Ronaldo de Assis Moreira"),
+            "cpf":          fields.String(required=True, description="CPF do usuário", example="12345678900"),
+            "birthday":     fields.Date  (required=True, description="Data de nascimento do usuário", example="21-05-1980"),
+            "email":        fields.String(required=True, description="Email do usuário", example="ronaldinhogaucho@email.com"),
+            "phone_number": fields.String(required=True, description="Número de telefone do usuário", example="55511234567"),
+            "password":     fields.String(required=True, description="Senha do usuário", example="senhasegur@1234"),
+        }
+    )
