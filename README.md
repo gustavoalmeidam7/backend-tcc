@@ -30,3 +30,9 @@ Finalmente rode:
 ```bash
 python -m src.main
 ```
+
+## Acessar documentação:
+Url padrão:
+```
+http://localhost:5000/api/doc
+```
