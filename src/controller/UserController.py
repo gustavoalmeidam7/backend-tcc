@@ -1,4 +1,4 @@
-from flask import Response, jsonify, request, make_response
+from flask import request, make_response
 from flask_restx import Resource, Namespace
 
 from src.dto.User.UserCreateDTO import UserDTO
@@ -23,10 +23,10 @@ class CreateUser(Resource):
         result, user = userService.create(user)
 
         if result.status == UserStatus.CREATED:
-            return jsonify(user)
+            return make_response(user, 200)
 
         if result.status == UserStatus.INVALID:
-            return Response(json.dumps({"erros": result.message}), 400)
+            return make_response({"erros": result.message}, 400)
 
 @api.route("/getall")
 class GetAllUsers(Resource):
