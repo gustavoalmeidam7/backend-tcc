@@ -18,6 +18,11 @@ class UserRepository:
 
     def find_all(self) -> 'list[User]':
         return list(User.select())
+    
+    def find_all_with_page(self, pagenumber: int= 0, pagesize: int = 25) -> 'list[User]':
+        return (User.select()
+                    .order_by(User.id.asc())
+                    .paginate(pagenumber, pagesize))
 
     def update(self, userModel: User) -> None:
         query = User.update(id=userModel.id, username=userModel.username, email=userModel.email).where(User.id == userModel.id)

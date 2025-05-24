@@ -51,8 +51,12 @@ class UserService:
     def delete_all(self) -> None:
         self.userRepository.delete_all()
 
-    def find_all_dict(self) -> dict:
-        return list(map(UserResponseDTO.model_to_dict, self.userRepository.find_all()))
+    def find_all_page_dict(self, page: int = 0, pagesize: int = 25) -> dict:
+        page = page or 1        # Tranforma page em 1 se o valor for None ou 0
+        pagesize = pagesize or 1
+
+        pagesize = max(1, min(pagesize, 50))
+        page = max(1, page)
+
+        return list(map(UserResponseDTO.model_to_dict, self.userRepository.find_all_with_page(page, pagesize)))
     
-    def find_all(self) -> list[UserResponseDTO]:
-        return list(map(UserResponseDTO.from_model, self.userRepository.find_all()))
