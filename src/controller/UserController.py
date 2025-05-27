@@ -8,8 +8,6 @@ from src.dto.User import UserCreateDTO, UserResponseDTO
 from src.dto.User.CreateUser import UserStatus
 from src.service.UserService import UserService
 
-import json
-
 api = Namespace("Users", description="Users blueprint", path="/user")
 
 userService = UserService()
