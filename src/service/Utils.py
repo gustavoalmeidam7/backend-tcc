@@ -7,10 +7,8 @@ def bulk_convert_to_dict(modelList) -> dict:
             modelList
         ))
 
-def unmask_number(number: str) -> str:
-    finalNumber = ""
-    for char in number:
-        if char.isnumeric():
-            finalNumber += char
-
-    return str(finalNumber)
+def unmask_number(number: str | None) -> str | None:
+    if number is None:
+        return None
+    
+    return filter(str.isdigit, number)
