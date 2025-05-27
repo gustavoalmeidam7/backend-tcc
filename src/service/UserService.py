@@ -12,9 +12,9 @@ class UserService:
     userRepository = UserRepository.get_instance()
 
     @staticmethod
-    def get_instance() -> 'UserRepository':
+    def get_instance() -> 'UserService':
         if not UserService.instance:
-            UserService.instance = UserRepository()
+            UserService.instance = UserService()
         return UserService.instance
 
     #TODO validar se o cpf é válido e mascara
