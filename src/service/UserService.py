@@ -1,7 +1,7 @@
 from playhouse.shortcuts import model_to_dict
 from src.dto.User.UserResponseDTO import UserResponseDTO
 from src.dto.User.UserCreateDTO import UserDTO
-from src.validator.UserDTOValidator import Error, UserDTOValidator
+from src.validator.User.UserDTOValidator import Error, UserDTOValidator
 from src.repository.UserRepository import UserRepository
 
 from src.dto.User.CreateUser import CreateUserResult, UserStatus
