@@ -1,12 +1,15 @@
 from fordev.generators import people
 import requests
 
+# Endpoint de criação de usuário
 URL = "http://localhost:5000/api/user/create"
 
+# Formata data do formato "dd/mm/YYYY" para o formato "dd-mm-YYYY"
 def format_date(date: str) -> str:
     date = date.split("/")
     return f"{date[0]}-{date[1]}-{date[2]}"
 
+# Cria uma lista de payloads para inserção do usuário com dados do fordev
 def create_users(number: int = 1) -> 'list[dict]':
     listUsers = []
     list_person = people(n=number)
@@ -22,6 +25,7 @@ def create_users(number: int = 1) -> 'list[dict]':
 
     return listUsers
 
+# Faz o request para o endpoint com os payloads fornecidos
 def insert_users(users: 'dict' = None) -> str :
     users_created = []
     for user in users:
