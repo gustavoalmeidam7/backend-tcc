@@ -1,49 +1,25 @@
-from playhouse.shortcuts import model_to_dict
-from src.dto.User.UserResponseDTO import UserResponseDTO
-from src.dto.User.UserCreateDTO import UserDTO
-from src.validator.UserDTOValidator import Error, UserDTOValidator
+from src.schema.User.UserCreateSchema import UserCreateSchema
+from src.schema.User.UserResponseSchema import UserResponseSchema
+
+from src.validator.UserValidator import is_user_valid
+from fastapi import HTTPException
+
 from src.repository.UserRepository import UserRepository
+from src.utils.singleton import singleton
 
-from src.dto.User.CreateUser import CreateUserResult, UserStatus
-
+@singleton
 class UserService:
-    instance = None
+    userRepository = UserRepository()
 
-    userRepository = UserRepository.get_instance()
+    def create(self, userSchema: UserCreateSchema) -> 'UserResponseSchema':
+        userModel = userSchema.to_model()
+        if(not is_user_valid(userModel)):
+            raise HTTPException(status_code=400 ,detail="Email, Phone Number ou CPF já existem") # TODO Arrumar status code e código de erro
 
-    @staticmethod
-    def get_instance() -> 'UserRepository':
-        if not UserService.instance:
-            UserService.instance = UserRepository()
-        return UserService.instance
 
-    #TODO validar se o cpf é válido e mascara
-    #TODO mascara do email 
-    #TODO mascara do telefone
-    def create(self, userDTO: UserDTO) -> CreateUserResult:
-        userDTOValidator = UserDTOValidator(userDTO)
-        userDTOValidator.validate()
+        createdUser = self.userRepository.create(userSchema.to_model())
 
-        if userDTOValidator.was_errors():
-            errors = userDTOValidator.get_errors()
-            dict_errors = []
-            for error in errors:
-                dict_errors.append({error.name: error.message})
-
-            return CreateUserResult(
-                status= UserStatus.INVALID,
-                message= dict_errors
-            ), None
-
-        createdUser = self.userRepository.create(userDTO.to_model())
-
-        dictResponse = model_to_dict(createdUser)
-        result = CreateUserResult(
-            status= UserStatus.CREATED,
-            message= "Usuário criado com sucesso!"
-        )
-
-        return result, dictResponse
+        return UserResponseSchema.from_user_model(createdUser)
     
     def delete_by_id(self, id: int) -> None:
         self.userRepository.delete_by_id(id)
@@ -51,12 +27,12 @@ class UserService:
     def delete_all(self) -> None:
         self.userRepository.delete_all()
 
-    def find_all_page_dict(self, page: int = 0, pagesize: int = 25) -> dict:
-        page = page or 1        # Tranforma page em 1 se o valor for None ou 0
+    def find_all_page_dict(self, page: int = 0, pagesize: int = 25) -> 'list[UserResponseSchema]':
+        page = page or 1        # Transforma page em 1 se o valor for None ou 0
         pagesize = pagesize or 1
 
         pagesize = max(1, min(pagesize, 50))
         page = max(1, page)
 
-        return list(map(UserResponseDTO.model_to_dict, self.userRepository.find_all_with_page(page, pagesize)))
+        return list(map(UserResponseSchema.from_user_model, self.userRepository.find_all_with_page(page, pagesize)))
     

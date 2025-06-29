@@ -1,4 +1,7 @@
+from datetime import date
 from playhouse.shortcuts import model_to_dict
+
+import re
 
 def bulk_convert_to_dict(modelList) -> dict:
     return list(
@@ -8,9 +11,15 @@ def bulk_convert_to_dict(modelList) -> dict:
         ))
 
 def unmask_number(number: str) -> str:
-    finalNumber = ""
-    for char in number:
-        if char.isnumeric():
-            finalNumber += char
+    return re.sub(r"[^0-9]", "", number)
 
-    return str(finalNumber)
+def validate_birthday(birthday: date) -> date:
+    if birthday > date.today():
+        raise ValueError("Data de nascimento deve ser antes de hoje")
+
+    return birthday
+
+# TODO do a real validation with external tools
+def validate_cpf(cpf: str) -> str:
+    cpf = unmask_number(cpf)
+    return cpf
