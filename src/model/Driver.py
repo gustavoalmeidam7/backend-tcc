@@ -1,5 +1,5 @@
 from peewee import Model, AutoField, CharField
-from src.db.DB import db
+from src.DB import db
 
 class Driver(Model):
     id             = AutoField(primary_key=True)
