@@ -1,9 +1,13 @@
 from fastapi import FastAPI
 
-from dotenv import load_dotenv
-import os
+from src.Utils.env import get_env_var
 
-load_dotenv()
-isDebug = os.getenv("Environment") == "DEV"
+from src.User.Controller.UserController import USER_ROUTER
+from src.User.Auth.Controller.AuthController import AUTH_ROUTER
+
+isDebug = get_env_var("Environment") == "DEV"
 
 app = FastAPI(debug=isDebug, title="Gerenciamento de ambulância API", description="Api para gerenciamento de ambulâncias - TCC", version="1.0.0", docs_url="/docs")
+
+app.include_router(USER_ROUTER)
+app.include_router(AUTH_ROUTER)

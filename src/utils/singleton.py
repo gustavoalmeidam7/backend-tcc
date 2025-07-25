@@ -1,9 +1,10 @@
-def singleton(cls):
-    instances = {}
+class singleton(type):
+    _instances = {}
 
-    def get_instance(*args, **kwargs):
-        if cls not in instances:
-            instances[cls] = cls(*args, **kwargs)
-        return instances[cls]
+    def __call__(cls, *args, **kwargs):
+        if cls not in cls._instances:
+            instance = super().__call__(*args, **kwargs)
 
-    return get_instance
+            cls._instances[cls] = instance
+
+        return cls._instances[cls]

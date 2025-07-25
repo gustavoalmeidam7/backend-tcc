@@ -2,9 +2,9 @@ from typing import Annotated
 from pydantic import BaseModel, Field, AfterValidator, EmailStr
 from datetime import date
 
-from src.model.User import User
+from src.Model.User import User
 
-from src.service.Utils import unmask_number, validate_birthday
+from src.User.Service.Utils import unmask_number, validate_birthday
 
 class UserCreateSchema(BaseModel):
     username:      Annotated[str, Field(max_length=35)]

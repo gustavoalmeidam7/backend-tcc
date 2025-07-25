@@ -1,6 +1,0 @@
-fastapi       == 0.115.14
-uvicorn       == 0.34.3
-peewee        == 3.18.1
-psycopg2      == 2.9.10
-dotenv        == 0.9.9
-python-dotenv == 1.1.0

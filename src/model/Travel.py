@@ -1,8 +1,8 @@
 from peewee import (
     AutoField, ForeignKeyField, Model, CharField, DateTimeField
 )
-from src.model import User, Driver, Ambulance
-from src.db.DB import db
+from src.Model import User, Driver, Ambulance
+from src.DB import db
 
 class Travel(Model):
     travel_id    = AutoField(primary_key=True)

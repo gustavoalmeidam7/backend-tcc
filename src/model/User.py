@@ -1,5 +1,5 @@
 from peewee import ForeignKeyField, Model, AutoField, CharField, DateField
-from src.db.DB import db
+from src.DB import db
 
 class User(Model):
     id              = AutoField(primary_key=True)
