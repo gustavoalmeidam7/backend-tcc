@@ -56,8 +56,6 @@ class SessionService(metaclass=singleton):
             ip=userIP
         )
 
-        print(session)
-
         return session
 
     def generate_jwt_token(self, id: UUID) -> dict:
