@@ -2,10 +2,9 @@
 
 ## Tecnologias utilizadas
 - Python 3.12
-- Flask/ Flask-restx
+- FastAPI
 - Peewee
 - Dotenv
-- Swagger para documentação
 
 ## Pré-requisitos
 - Interpretador [Python](https://www.python.org/downloads/) versão 3.12 ou superior
@@ -17,23 +16,30 @@
 git clone https://github.com/gustavoalmeidam7/backend-tcc
 cd backend-tcc
 
-pip install -r requiriments.txt
+pip install -r requirements.txt
 ```
 
-Crie um arquivo ``` .env ```  na raiz do projeto e coloque a chave:
+Copie o arquivo ``` example.env ``` e renomeie o mesmo para ``` .env ``` na raiz do projeto e troque as chaves necessárias, exemplo:
 ```js
 environment = DEV
+secret_key_jwt = changeme  (Troque para uma secret key segura)
+algorithm_jwt= HS256 (Compatível com o algotirimo HS256)
 ```
 
 A chave PROD também pode ser usada, porém é necessario um banco de dados postgres
 
-Finalmente rode:
+Para executar use:
 ```bash
-python -m src.main
+uvicorn src.main:app
 ```
 
 ## Acessar documentação:
-Url padrão:
+Url padrão para OpenAPI:
 ```
-http://localhost:5000/api/doc
+http://localhost:8000/api/docs
+```
+
+Url padrão para Redoc:
+```
+http://localhost:8000/api/redoc
 ```
