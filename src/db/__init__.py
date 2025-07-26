@@ -17,6 +17,6 @@ databases = {
 try:
     get_env_var("environment")
 except(KeyError):
-    raise RuntimeError("No \"environment\" key set on .env file, please set one (\"PROD\" or \"DEV\")")
+    raise RuntimeError("Sem chaves de \"environment\" fornecidas no .env file, por favor adicione alguma (\"PROD\" ou \"DEV\")")
 
 db = databases[get_env_var("environment")].db
