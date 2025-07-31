@@ -3,11 +3,11 @@ from src.DB import postgres, sqlite
 from src.Utils.env import get_env_var
 
 class connection:
-    database = "application"
-    password = "123456"
-    ip = "localhost"
-    port = "5432"
-    user = "application"
+    database = get_env_var("db_database")
+    password = get_env_var("db_password")
+    ip       = get_env_var("db_host")
+    port     = get_env_var("db_port") or "5432"
+    user     = get_env_var("db_user")
 
 databases = {
     "PROD": postgres.Database(connection),
