@@ -21,12 +21,18 @@ pip install -r requirements.txt
 
 Copie o arquivo ``` example.env ``` e renomeie o mesmo para ``` .env ``` na raiz do projeto e troque as chaves necessárias, exemplo:
 ```js
-environment = DEV
+environment = PROD         (Usar "PROD" ou "DEV")
 secret_key_jwt = changeme  (Troque para uma secret key segura)
-algorithm_jwt= HS256 (Compatível com o algotirimo HS256)
+algorithm_jwt= HS256       (Compatível com o algotirimo HS256)
+
+db_database=database           (O database do seu banco de dados postgres)
+db_password=secret_db_password (A senha para seu usuário postgres)
+db_host=127.0.0.1              (Host ou ip para o database)
+db_port=5432                   (A porta do banco, essa é o padrão)
+db_user=user                   (Usuário para o banco de dados)
 ```
 
-A chave PROD também pode ser usada, porém é necessario um banco de dados postgres
+A o usar a chave do environment "PROD", você precisa definir todas que iniciam com db_ e ter uma instancia do postgres rodando, se quiser apenas testar usando um banco sqlite você pode apenas mudar a key do environment para "DEV"
 
 Para executar use:
 ```bash
